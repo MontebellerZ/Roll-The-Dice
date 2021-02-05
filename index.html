@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Roll The Dice</title>
+
+	<script src="https://kit.fontawesome.com/092d3f6b65.js" crossorigin="anonymous"></script>
+
+	<style type="text/css">
+		body{
+			background-image: url(https://i.pinimg.com/originals/03/01/91/030191f6f591c44f4ed9e23de3ff2077.jpg);
+			background-size: cover;
+			background-repeat: none;
+			user-select: none;
+		}
+
+		.menubtn{
+			display:inline-block;
+			margin: 10px 10px 0px;
+			width: 100px;
+			height: 40px;
+			font-size: 20px;
+			font-weight: bold;
+			color: white;
+			background-image: linear-gradient(150deg, rgb(196, 167, 0), rgb(43, 37, 0));
+			box-shadow: 3px 3px 8px 2px #544800;
+			border: 2px solid black;
+			transition: ease 0.5s;
+		}
+
+		.menubtn:hover{
+			transform: scale(1.1);
+		}
+
+		#mesa{
+			display: inline-block;
+			margin-top: 50px;
+			margin-left: 10px;
+		}
+
+		#dado{
+			float: left;
+			padding: 30px;
+			height: 200px;
+			width: 200px;
+			position: relative;
+			border: 4px solid black;
+			border-radius: 50%;
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+
+		#dado img{
+			position: absolute;
+			height: 200px;
+			width: 200px;
+		}
+
+		#rolagem{
+			float: left;
+			position: relative;
+			margin-left: 15px;
+			padding: 30px;
+			width: 200px;
+			height: 200px;
+			display: inline-block;
+			border: 4px solid black;
+			border-radius: 50%;
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+
+		#rolar{
+			width: 150px;
+			height: 50px;
+			font-size: 24px;
+			font-weight: bold;
+			border: 3px solid black;
+			border-radius: 5px;
+			background-color: rgb(166, 143, 0);
+			position: absolute;
+			left: 50%;
+			bottom: 15%;
+			transform: translateX(-50%);
+		}
+
+		#rolar:hover{
+			background-color: rgb(255, 220, 0);
+		}
+
+		#resultado{
+			display: inline-block;
+			font-size: 24px;
+			font-weight: bold;
+			color: white;
+			font-size: 80px;
+			position: absolute;
+			left: 50%;
+			top: 40%;
+			transform: translate(-50%, -50%);
+		}
+
+		#historico{
+			position: relative;
+			display: inline-block;
+			margin-left: 15px;
+			height: 252px;
+			width: 360px;
+			border: 4px solid black;
+			padding: 4px;
+			background-color: rgba(255,255,255,0.2);
+		}
+
+		#past{
+			padding: 4px;
+			height: 212px;
+			border: 1px solid black;
+			background-color: rgba(0,0,0,0.4);
+			overflow: auto;
+			user-select: text;
+		}
+
+		#past p{
+			display: inline-block;
+			color: white;
+		}
+
+		#clear{
+			position: absolute;
+			margin-top: 4px;
+			height: 26px;
+			width: 80px;
+			color: black;
+			font-size: 18px;
+			font-weight: bold;
+			border: 2px solid black;
+			background-color: rgb(166, 143, 0);
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		#clear:hover{
+			background-color: rgb(255, 220, 0);
+		}
+	</style>
+</head>
+
+<body>
+	<div id="menu">
+		<button onclick="show(2);" class="menubtn">D2</button>
+		<button onclick="show(4);" class="menubtn">D4</button>
+		<button onclick="show(6);" class="menubtn">D6</button>
+		<button onclick="show(8);" class="menubtn">D8</button>
+		<button onclick="show(10);" class="menubtn">D10</button>
+		<button onclick="show(12);" class="menubtn">D12</button>
+		<button onclick="show(20);" class="menubtn">D20</button>
+		<button onclick="show(100);" class="menubtn">D100</button>
+	</div>
+
+	<div id="mesa">
+		<div id="dado">
+			<img src="imgs/d20.png" alt="d20">
+		</div>
+
+		<div id="rolagem">
+			<div id="resultado">0</div>
+			<button id="rolar" onclick="rolar();">Rolar D20</button>
+		</div>
+
+		<div id="historico">
+			<div id="past"></div>
+			<button id="clear" onclick="limpar();">Limpar</button>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var lados=20, random=0, ultima;
+
+		function show(L){
+			lados = L;
+			
+			document.getElementById("resultado").innerHTML = "0";
+			document.getElementById("rolar").innerHTML = "Rolar D"+lados;
+			document.getElementById("dado").innerHTML = "<img src='imgs/d"+lados+".png' alt='d"+lados+"'>";
+		}
+
+		function rolar(){
+			random = Math.floor(Math.random()*(lados)+1);
+			ultima = "<p>- D"+lados+": "+random+" -</p>";
+
+			document.getElementById("resultado").innerHTML = random;
+			document.getElementById("past").innerHTML += ultima;
+			past.scrollTop = past.scrollHeight;
+		}
+
+		function limpar(){
+			document.getElementById("past").innerHTML = ultima;
+			ultima = "";
+		}
+	</script>
+</body>
+</html>
